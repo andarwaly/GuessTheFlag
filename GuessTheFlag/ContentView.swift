@@ -78,9 +78,9 @@ struct ContentView: View {
         .alert(isPresented: $showingScore) {
             switch activeAlert {
             case .correct:
-                return Alert(title: Text("Correct!"), message: Text("You've got 10 Points!"), dismissButton: .default(Text("Next Question"), action: self.nextQuestion))
+                return Alert(title: Text("Correct!"), message: Text("Yup this is the flag of \(tappedFlag). You've got 10 Points!"), dismissButton: .default(Text("Next Question"), action: self.nextQuestion))
             case .wrong:
-                return Alert(title: Text("Wrong!"), message: Text("This is the flag of \(countries[correctAnswer])."), dismissButton: .default(Text("Next Question"), action: self.nextQuestion))
+                return Alert(title: Text("Wrong!"), message: Text("Bad luck, This is the flag of \(tappedFlag)."), dismissButton: .default(Text("Next Question"), action: self.nextQuestion))
             case .result:
                 return Alert(title: Text("Final Score"), message: Text("Your score is \(userScore)"), dismissButton: .default(Text("Play Again"), action: self.resetGame))
             case .none:
@@ -93,12 +93,14 @@ struct ContentView: View {
         tapCount += 1
         
         if number == correctAnswer {
+            tappedFlag = countries[correctAnswer]
             activeAlert = .correct
             userScore += 10
             withAnimation {
                 gradAnimate = true
             }
         } else {
+            tappedFlag = countries[number]
             activeAlert = .wrong
             if userScore == 0 {
                 userScore = 0
