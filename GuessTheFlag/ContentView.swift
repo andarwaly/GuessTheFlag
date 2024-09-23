@@ -7,6 +7,21 @@
 
 import SwiftUI
 
+
+struct FlagImage: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .shadow(radius:2)
+    }
+}
+
+extension View {
+    func flagImage() -> some View {
+        modifier(FlagImage())
+    }
+}
+
 struct ContentView: View {
     
     @State private var gradAnimate = true
@@ -53,8 +68,7 @@ struct ContentView: View {
                             } label: {
                                 Image(countries[number])
                                     .renderingMode(.original)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                                    .shadow(radius:2)
+                                    .flagImage()
                             }
                         }
                     }
